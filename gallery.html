@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Our precious memories together">
+    <title>Memory Gallery ❤️</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            padding-top: 80px;
+        }
+
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .gallery-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Polaroid Gallery */
+        .polaroid-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+            margin: 40px 0;
+        }
+
+        .polaroid {
+            background: white;
+            padding: 15px;
+            padding-bottom: 80px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+            cursor: pointer;
+            position: relative;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .polaroid:hover {
+            transform: translateY(-15px) rotate(0deg) !important;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            z-index: 10;
+        }
+
+        .polaroid:nth-child(3n+1) {
+            transform: rotate(-3deg);
+        }
+
+        .polaroid:nth-child(3n+2) {
+            transform: rotate(2deg);
+        }
+
+        .polaroid:nth-child(3n+3) {
+            transform: rotate(-2deg);
+        }
+
+        .polaroid-image {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            margin-bottom: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .polaroid-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .polaroid-caption {
+            text-align: center;
+            font-family: 'Parisienne', cursive;
+            font-size: 1.3rem;
+            color: #333;
+            min-height: 40px;
+            padding: 0 10px;
+        }
+
+        .polaroid-caption.editable {
+            border: 2px dashed transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: text;
+            padding: 5px 10px;
+        }
+
+        .polaroid-caption.editable:hover {
+            border-color: var(--light-pink);
+            background: rgba(255, 128, 171, 0.05);
+        }
+
+        .polaroid-caption.editable:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            background: rgba(255, 128, 171, 0.1);
+        }
+
+        .polaroid-date {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 0.85rem;
+            color: #999;
+            font-style: italic;
+        }
+
+        /* Add Photo Button */
+        .add-photo {
+            background: rgba(255, 255, 255, 0.3);
+            border: 3px dashed var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 350px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 20px;
+        }
+
+        .add-photo:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05) !important;
+        }
+
+        .add-photo-icon {
+            font-size: 4rem;
+            color: var(--white);
+            margin-bottom: 15px;
+        }
+
+        .add-photo-text {
+            color: var(--white);
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            max-width: 90%;
+            max-height: 90%;
+            background: white;
+            padding: 20px;
+            padding-bottom: 100px;
+            position: relative;
+        }
+
+        .lightbox-image {
+            width: 100%;
+            max-height: 70vh;
+            object-fit: contain;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            font-family: 'Parisienne', cursive;
+            font-size: 2rem;
+            color: #333;
+            margin-top: 20px;
+            padding: 0 20px;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            font-size: 3rem;
+            color: white;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+
+        .lightbox-close:hover {
+            color: var(--primary-pink);
+        }
+
+        /* Memory Stats */
+        .memory-stats {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 60px 0 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .memory-stats h3 {
+            color: var(--primary-pink);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            padding: 20px;
+            background: linear-gradient(135deg, #fff5f7, #ffffff);
+            border-radius: 15px;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-pink);
+        }
+
+        .stat-label {
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .edit-hint {
+            text-align: center;
+            color: var(--white);
+            font-size: 0.9rem;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .polaroid-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .polaroid {
+                transform: rotate(0deg) !important;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">💕 Our Love</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="navbar-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="my-feelings.html">My Feelings</a></li>
+            <li><a href="our-future.html">Our Future</a></li>
+            <li><a href="love-letter.html">Love Letter</a></li>
+            <li><a href="gallery.html" class="active">Gallery</a></li>
+            <li><a href="game.html">Games</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="gallery-container">
+            <div class="gallery-header fade-in-down">
+                <h1 class="section-title">Memory Gallery 📸</h1>
+                <p class="section-subtitle">Our precious moments frozen in time</p>
+            </div>
+
+            <!-- Memory Stats -->
+            <div class="memory-stats fade-in-up">
+                <h3>Our Journey in Numbers</h3>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-number" id="daysTogetherStat">55</div>
+                        <div class="stat-label">Days Together</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number" id="memoriesCount">Manyyyy</div>
+                        <div class="stat-label">Memories Captured</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">∞</div>
+                        <div class="stat-label">Love & Happiness</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">Perfect Match</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Polaroid Gallery -->
+            <!-- 
+                TO ADD YOUR OWN PHOTOS:
+                1. Create a folder called "photos" in the same directory as this HTML file
+                2. Put your photos in that folder (name them: photo1.jpg, photo2.jpg, etc.)
+                3. Copy the template below and paste it for each photo
+                4. Change the src="photos/photo1.jpg" to match your photo filename
+                5. Edit the caption and date
+                
+                PHOTO TEMPLATE:
+                <div class="polaroid" onclick="openLightbox(this)">
+                    <div class="polaroid-image">
+                        <img src="photos/photo1.jpg" alt="Memory">
+                    </div>
+                    <div class="polaroid-caption editable" contenteditable="true">Your caption here</div>
+                    <div class="polaroid-date">2025</div>
+                </div>
+            -->
+            <div class="polaroid-grid" id="polaroidGrid">
+
+                <!-- Example Photo 1 - Replace with your own -->
+                <div class="polaroid" onclick="openLightbox(this)">
+                    <div class="polaroid-image">
+                        <img src="photos/photo1.jpg" alt="Our first date" onerror="this.parentElement.innerHTML='💑'">
+                    </div>
+                    <div class="polaroid-caption editable" contenteditable="true">Our first date - the beginning of
+                        forever</div>
+                    <div class="polaroid-date">Dec 2025</div>
+                </div>
+
+                <!-- Example Photo 2 - Replace with your own -->
+                <div class="polaroid" onclick="openLightbox(this)">
+                    <div class="polaroid-image">
+                        <img src="photos/photo2.jpg" alt="Special moment" onerror="this.parentElement.innerHTML='💕'">
+                    </div>
+                    <div class="polaroid-caption editable" contenteditable="true">A special moment together</div>
+                    <div class="polaroid-date">Dec 2025</div>
+                </div>
+
+                <!-- Example Photo 3 - Replace with your own -->
+                <div class="polaroid" onclick="openLightbox(this)">
+                    <div class="polaroid-image">
+                        <img src="photos/photo3.jpg" alt="Happy times" onerror="this.parentElement.innerHTML='😊'">
+                    </div>
+                    <div class="polaroid-caption editable" contenteditable="true">Happy times with you</div>
+                    <div class="polaroid-date">2025</div>
+                </div>
+
+                <!-- Add more photos by copying the template above -->
+
+            </div>
+
+            <p class="edit-hint">💡 Click on any photo to view larger, or click captions to edit!</p>
+
+            <!-- Navigation Buttons -->
+            <div style="display: flex; justify-content: space-between; margin-top: 60px; flex-wrap: wrap; gap: 15px;">
+                <a href="love-letter.html" class="btn btn-outline">← Love Letter</a>
+                <a href="game.html" class="btn">Next: Games →</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">×</button>
+        <div class="lightbox-content" onclick="event.stopPropagation()">
+            <div class="lightbox-image" id="lightboxImage"></div>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 8000);
+            }, 300);
+        }
+
+        createFloatingHearts();
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Calculate days together
+        function calculateDaysTogether() {
+            // Set your relationship start date here
+            const startDate = new Date('2024-01-01'); // Change this to your actual date
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('daysTogetherStat').textContent = diffDays;
+
+            // Save to localStorage
+            localStorage.setItem('relationshipStartDate', startDate.toISOString());
+        }
+
+        // Load saved start date or use default
+        const savedStartDate = localStorage.getItem('relationshipStartDate');
+        if (savedStartDate) {
+            const startDate = new Date(savedStartDate);
+            const today = new Date();
+            const diffTime = Math.abs(today - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+            document.getElementById('daysTogetherStat').textContent = diffDays;
+        } else {
+            calculateDaysTogether();
+        }
+
+        // Save caption edits
+        document.querySelectorAll('.polaroid-caption.editable').forEach((element, index) => {
+            const key = 'caption_' + index;
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                element.textContent = saved;
+            }
+
+            element.addEventListener('blur', function () {
+                localStorage.setItem(key, this.textContent);
+            });
+        });
+
+        // Lightbox functionality
+        function openLightbox(polaroid) {
+            const image = polaroid.querySelector('.polaroid-image').innerHTML;
+            const caption = polaroid.querySelector('.polaroid-caption').textContent;
+
+            document.getElementById('lightboxImage').innerHTML = image;
+            document.getElementById('lightboxCaption').textContent = caption;
+            document.getElementById('lightbox').classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+
+        // Close lightbox on Escape key
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Update memory count
+        const photoCount = document.querySelectorAll('.polaroid').length;
+        document.getElementById('memoriesCount').textContent = photoCount;
+    </script>
+</body>
+
+</html>

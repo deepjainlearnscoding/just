@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A heartfelt love message for you">
+    <title>My Love Letter - Valentine's Day ❤️</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="message-page">
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Background Music Toggle -->
+    <button class="music-toggle" id="musicToggle" aria-label="Toggle background music">
+        <span class="music-icon">🎵</span>
+    </button>
+
+    <!-- Message Section -->
+    <section class="message-section" id="messageSection">
+        <div class="message-container unlocked" id="messageContainer">
+            <div class="message-content" id="messageContent">
+                <h2 class="message-title">My Love Letter to You</h2>
+                <p class="message-text">
+                    From the moment you came into my life, everything changed.
+                    You are my smile, my peace, my forever.
+                    I promise to love you today and always. ❤️
+                </p>
+                <p class="message-text">
+                    Every heartbeat whispers your name, every dream is painted with your colors.
+                    You've turned my world into a beautiful symphony of love and laughter.
+                </p>
+                <p class="message-signature">With all my heart, forever yours 💖</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Photo Gallery Section -->
+    <section class="gallery-section" id="gallerySection">
+        <div class="gallery-container">
+            <h2 class="section-title">Our Beautiful Moments</h2>
+            <div class="photo-frame">
+                <div class="heart-frame">
+                    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=800&h=800&fit=crop"
+                        alt="Our special moment" class="gallery-photo">
+                </div>
+                <p class="photo-caption">Forever in my heart 💕</p>
+            </div>
+
+            <div class="page-navigation">
+                <a href="game.html" class="nav-link">← Back to Game</a>
+                <a href="timeline.html" class="cta-button">Continue to Our Story →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confettiCanvas"></canvas>
+
+    <!-- Audio Element -->
+    <audio id="bgMusic" loop>
+        <!-- <source src="romantic-music.mp3" type="audio/mpeg"> -->
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

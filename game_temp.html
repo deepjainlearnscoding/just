@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play fun Valentine's Day games - Memory Match, Love Quiz, and Spin the Wheel">
+    <title>Valentine's Games - Love & Fun ❤️</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-pink: #ff1744;
+            --soft-pink: #ff4081;
+            --light-pink: #ff80ab;
+            --deep-red: #c51162;
+            --white: #ffffff;
+            --cream: #fff5f7;
+            --shadow: rgba(255, 23, 68, 0.3);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Floating Hearts Background */
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .heart-particle {
+            position: absolute;
+            font-size: 20px;
+            animation: float-up 8s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .header h1 {
+            font-family: 'Parisienne', cursive;
+            font-size: 4rem;
+            color: var(--white);
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: var(--cream);
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* Games Grid */
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            animation: fadeInUp 1s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 50px rgba(255, 23, 68, 0.4);
+        }
+
+        .game-card h2 {
+            color: var(--primary-pink);
+            font-size: 2rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .game-card p {
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* Buttons */
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary-pink), var(--soft-pink));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px var(--shadow);
+        }
+
+        .btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Memory Game */
+        .memory-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .memory-card {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--soft-pink), var(--light-pink));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .memory-card.flipped {
+            background: white;
+            border: 3px solid var(--primary-pink);
+        }
+
+        .memory-card.matched {
+            background: linear-gradient(135deg, #4caf50, #8bc34a);
+            cursor: default;
+        }
+
+        .memory-card .back {
+            display: block;
+        }
+
+        .memory-card .front {
+            display: none;
+        }
+
+        .memory-card.flipped .back {
+            display: none;
+        }
+
+        .memory-card.flipped .front {
+            display: block;
+        }
+
+        /* Quiz */
+        .quiz-container {
+            display: none;
+        }
+
+        .quiz-question {
+            background: var(--cream);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .quiz-question h3 {
+            color: var(--deep-red);
+            margin-bottom: 15px;
+        }
+
+        .quiz-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .quiz-option {
+            padding: 12px 20px;
+            background: white;
+            border: 2px solid var(--light-pink);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-option:hover {
+            background: var(--light-pink);
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .quiz-option.selected {
+            background: var(--primary-pink);
+            color: white;
+            border-color: var(--deep-red);
+        }
+
+        /* Spin Wheel */
+        .wheel-container {
+            display: none;
+            text-align: center;
+        }
+
+        .wheel {
+            width: 300px;
+            height: 300px;
+            margin: 20px auto;
+            border-radius: 50%;
+            border: 15px solid var(--primary-pink);
+            position: relative;
+            transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+            background: conic-gradient(from 0deg,
+                    #ff1744 0deg 45deg,
+                    #f50057 45deg 90deg,
+                    #ff4081 90deg 135deg,
+                    #ff80ab 135deg 180deg,
+                    #c51162 180deg 225deg,
+                    #880e4f 225deg 270deg,
+                    #f48fb1 270deg 315deg,
+                    #ff1744 315deg 360deg);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .wheel-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: white;
+            border-radius: 50%;
+            border: 5px solid var(--primary-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            z-index: 10;
+        }
+
+        .wheel-pointer {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 40px solid var(--deep-red);
+        }
+
+        .wheel-text {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wheel-segment {
+            position: absolute;
+            color: white;
+            font-weight: 600;
+            font-size: 0.9rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Stats */
+        .game-stats {
+            display: flex;
+            justify-content: space-around;
+            margin: 15px 0;
+            padding: 15px;
+            background: var(--cream);
+            border-radius: 10px;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-label {
+            display: block;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            display: block;
+            color: var(--primary-pink);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        /* Result */
+        .result {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            background: var(--cream);
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .result.show {
+            display: block;
+            animation: bounceIn 0.6s ease;
+        }
+
+        .result h3 {
+            color: var(--primary-pink);
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes bounceIn {
+            0% {
+                transform: scale(0.3);
+                opacity: 0;
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            70% {
+                transform: scale(0.9);
+            }
+
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .wheel {
+                width: 250px;
+                height: 250px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">💕 Our Love</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="navbar-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="my-feelings.html">My Feelings</a></li>
+            <li><a href="our-future.html">Our Future</a></li>
+            <li><a href="love-letter.html">Love Letter</a></li>
+            <li><a href="special.html">Special</a></li>
+            <li><a href="game.html" class="active">Games</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>💕 Valentine's Games 💕</h1>
+            <p>Play fun games and celebrate love!</p>
+        </div>
+
+        <!-- Games Grid -->
+        <div class="games-grid">
+            <!-- Memory Match Game -->
+            <div class="game-card">
+                <h2>💝 Memory Match</h2>
+                <p>Find all the matching pairs of love symbols!</p>
+
+                <div class="game-stats" id="memoryStats" style="display: none;">
+                    <div class="stat">
+                        <span class="stat-label">Moves</span>
+                        <span class="stat-value" id="memoryMoves">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Matches</span>
+                        <span class="stat-value" id="memoryMatches">0/8</span>
+                    </div>
+                </div>
+
+                <div class="memory-grid" id="memoryGrid"></div>
+
+                <button class="btn" id="memoryBtn">Start Game</button>
+
+                <div class="result" id="memoryResult"></div>
+            </div>
+
+            <!-- Love Quiz -->
+            <div class="game-card">
+                <h2>💖 Love Quiz</h2>
+                <p>Discover your love personality!</p>
+
+                <div class="quiz-container" id="quizContainer"></div>
+
+                <button class="btn" id="quizBtn">Start Quiz</button>
+
+                <div class="result" id="quizResult"></div>
+            </div>
+
+            <!-- Spin the Wheel -->
+            <div class="game-card">
+                <h2>🎡 Spin the Wheel</h2>
+                <p>Spin to get your romantic fortune!</p>
+
+                <div class="wheel-container" id="wheelContainer">
+                    <div class="wheel-pointer"></div>
+                    <div class="wheel" id="wheel">
+                        <div class="wheel-center">❤️</div>
+                    </div>
+                </div>
+
+                <button class="btn" id="spinBtn">Spin the Wheel</button>
+
+                <div class="result" id="wheelResult"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 8000);
+            }, 300);
+        }
+
+        createFloatingHearts();
+
+        // ===== MEMORY MATCH GAME =====
+        const memorySymbols = ['❤️', '💕', '💖', '💗', '💝', '💘', '🌹', '💐'];
+        let memoryCards = [...memorySymbols, ...memorySymbols];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function createMemoryGame() {
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            memoryCards = shuffleArray([...memorySymbols, ...memorySymbols]);
+            matchedPairs = 0;
+            moves = 0;
+            flippedCards = [];
+
+            document.getElementById('memoryMoves').textContent = '0';
+            document.getElementById('memoryMatches').textContent = '0/8';
+            document.getElementById('memoryResult').classList.remove('show');
+
+            memoryCards.forEach((symbol, index) => {
+                const card = document.createElement('div');
+                card.className = 'memory-card';
+                card.innerHTML = `
+                    <span class="back">💝</span>
+                    <span class="front">${symbol}</span>
+                `;
+                card.dataset.symbol = symbol;
+                card.dataset.index = index;
+                card.addEventListener('click', flipCard);
+                grid.appendChild(card);
+            });
+        }
+
+        function flipCard() {
+            if (flippedCards.length >= 2) return;
+            if (this.classList.contains('flipped') || this.classList.contains('matched')) return;
+
+            this.classList.add('flipped');
+            flippedCards.push(this);
+
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('memoryMoves').textContent = moves;
+                checkMatch();
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+
+            if (card1.dataset.symbol === card2.dataset.symbol) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                document.getElementById('memoryMatches').textContent = `${matchedPairs}/8`;
+                flippedCards = [];
+
+                if (matchedPairs === 8) {
+                    setTimeout(() => {
+                        const result = document.getElementById('memoryResult');
+                        result.innerHTML = `
+                            <h3>🎉 Congratulations! 🎉</h3>
+                            <p>You matched all pairs in ${moves} moves!</p>
+                            <p>${moves <= 12 ? '⭐⭐⭐ Perfect!' : moves <= 20 ? '⭐⭐ Great!' : '⭐ Good job!'}</p>
+                        `;
+                        result.classList.add('show');
+                    }, 500);
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                    flippedCards = [];
+                }, 1000);
+            }
+        }
+
+        document.getElementById('memoryBtn').addEventListener('click', function () {
+            document.getElementById('memoryGrid').style.display = 'grid';
+            document.getElementById('memoryStats').style.display = 'flex';
+            this.textContent = 'Restart Game';
+            createMemoryGame();
+        });
+
+        // ===== LOVE QUIZ =====
+        const quizQuestions = [
+            {
+                question: "What's your ideal date?",
+                options: ["Romantic dinner", "Adventure outdoors", "Movie night at home", "Concert or show"],
+                scores: [3, 1, 2, 1]
+            },
+            {
+                question: "How do you express love?",
+                options: ["Words of affirmation", "Quality time", "Physical touch", "Acts of service"],
+                scores: [2, 3, 1, 2]
+            },
+            {
+                question: "What matters most in a relationship?",
+                options: ["Trust", "Communication", "Passion", "Friendship"],
+                scores: [3, 2, 1, 2]
+            },
+            {
+                question: "Your perfect Valentine's gift?",
+                options: ["Handwritten letter", "Surprise trip", "Jewelry", "Homemade dinner"],
+                scores: [3, 1, 2, 2]
+            },
+            {
+                question: "How do you handle conflicts?",
+                options: ["Talk it out immediately", "Take time to cool down", "Compromise quickly", "Seek advice first"],
+                scores: [2, 2, 3, 1]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let quizScore = 0;
+
+        function startQuiz() {
+            currentQuestion = 0;
+            quizScore = 0;
+            document.getElementById('quizResult').classList.remove('show');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const container = document.getElementById('quizContainer');
+
+            if (currentQuestion >= quizQuestions.length) {
+                showQuizResult();
+                return;
+            }
+
+            const q = quizQuestions[currentQuestion];
+            container.innerHTML = `
+                <div class="quiz-question">
+                    <h3>Question ${currentQuestion + 1}/${quizQuestions.length}</h3>
+                    <p style="margin: 15px 0; color: #333; font-weight: 500;">${q.question}</p>
+                    <div class="quiz-options">
+                        ${q.options.map((option, index) => `
+                            <div class="quiz-option" data-score="${q.scores[index]}">${option}</div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+
+            container.querySelectorAll('.quiz-option').forEach(option => {
+                option.addEventListener('click', function () {
+                    container.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+                    this.classList.add('selected');
+                    quizScore += parseInt(this.dataset.score);
+
+                    setTimeout(() => {
+                        currentQuestion++;
+                        showQuestion();
+                    }, 500);
+                });
+            });
+        }
+
+        function showQuizResult() {
+            document.getElementById('quizContainer').innerHTML = '';
+            const result = document.getElementById('quizResult');
+
+            let personality = '';
+            if (quizScore >= 12) {
+                personality = '💕 Romantic Dreamer - You believe in fairy tale love and grand gestures!';
+            } else if (quizScore >= 8) {
+                personality = '💖 Balanced Lover - You value both passion and stability in relationships!';
+            } else {
+                personality = '💝 Adventurous Heart - You love excitement and spontaneity in romance!';
+            }
+
+            result.innerHTML = `
+                <h3>Your Love Personality</h3>
+                <p style="font-size: 1.2rem; margin: 15px 0; color: #333;">${personality}</p>
+                <p>Score: ${quizScore}/15</p>
+            `;
+            result.classList.add('show');
+            document.getElementById('quizBtn').textContent = 'Retake Quiz';
+        }
+
+        document.getElementById('quizBtn').addEventListener('click', function () {
+            document.getElementById('quizContainer').style.display = 'block';
+            this.style.display = 'none';
+            startQuiz();
+
+            setTimeout(() => {
+                this.style.display = 'block';
+            }, 100);
+        });
+
+        // ===== SPIN THE WHEEL =====
+        const wheelPrizes = [
+            DARE: Give a passionate 15-second kiss,
+            TRUTH: What is the most romantic thing I have ever done for you?,
+            DARE: Whisper something flirty in my ear,
+            TRUTH: When did you first realize you were falling for me?,
+            DARE: Send me a voice note saying I love you in 3 different ways,
+            TRUTH: What is your favorite memory of us together?,
+            DARE: Sing a love song while looking into my eyes,
+            TRUTH: What do you love most about our relationship?,
+            DARE: Kiss me on my favorite spot,
+            TRUTH: What is one thing you have never told me but want to?,
+            DARE: Give me the tightest hug for 30 seconds,
+            TRUTH: How do I make you feel special?,
+            DARE: Write I love you on my hand and kiss it,
+            TRUTH: What is your favorite thing about my personality?,
+            DARE: Compliment me for 1 minute straight without stopping,
+            TRUTH: What is your biggest fear about losing me?,
+            DARE: Stare into my eyes without laughing for 30 seconds,
+            TRUTH: What is your dream date with me?,
+            DARE: Give me 5 kisses on different places,
+            TRUTH: How has loving me changed you?
+        ];
+
+        let isSpinning = false;
+
+        document.getElementById('spinBtn').addEventListener('click', function () {
+            if (isSpinning) return;
+
+            isSpinning = true;
+            document.getElementById('wheelContainer').style.display = 'block';
+            document.getElementById('wheelResult').classList.remove('show');
+
+            const wheel = document.getElementById('wheel');
+            const randomDegree = Math.floor(Math.random() * 360) + 1440; // At least 4 full rotations
+
+            wheel.style.transform = `rotate(${randomDegree}deg)`;
+
+            setTimeout(() => {
+                const normalizedDegree = randomDegree % 360;
+                const prizeIndex = Math.floor((360 - normalizedDegree) / 45) % 8;
+                const prize = wheelPrizes[prizeIndex];
+
+                const result = document.getElementById('wheelResult');
+                result.innerHTML = `
+                    <h3>🎉 You Won! 🎉</h3>
+                    <p style="font-size: 1.5rem; margin: 15px 0;">${prize}</p>
+                    <p>Enjoy your romantic reward!</p>
+                `;
+                result.classList.add('show');
+
+                isSpinning = false;
+                wheel.style.transform = 'rotate(0deg)';
+                wheel.style.transition = 'none';
+                setTimeout(() => {
+                    wheel.style.transition = 'transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99)';
+                }, 50);
+            }, 4000);
+        });
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

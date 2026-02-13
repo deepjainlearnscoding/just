@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Our love story - how we met and fell in love">
+    <title>Our Story ❤️</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            padding-top: 80px;
+        }
+
+        .story-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .story-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-pink), var(--soft-pink), var(--light-pink));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            margin-bottom: 60px;
+            position: relative;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+            margin-right: 0;
+            text-align: left;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+            margin-left: 0;
+            text-align: left;
+        }
+
+        .timeline-content {
+            width: calc(50% - 40px);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: 4px solid var(--primary-pink);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            z-index: 10;
+            box-shadow: 0 5px 15px var(--shadow);
+        }
+
+        .timeline-date {
+            color: var(--primary-pink);
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+
+        .timeline-title {
+            color: var(--deep-red);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .timeline-description {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .timeline-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, var(--light-pink), var(--soft-pink));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin-top: 15px;
+        }
+
+        /* Editable Content */
+        .editable {
+            min-height: 50px;
+            padding: 10px;
+            border: 2px dashed transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: text;
+        }
+
+        .editable:hover {
+            border-color: var(--light-pink);
+            background: rgba(255, 128, 171, 0.05);
+        }
+
+        .editable:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            background: rgba(255, 128, 171, 0.1);
+        }
+
+        .edit-hint {
+            text-align: center;
+            color: var(--soft-pink);
+            font-size: 0.9rem;
+            margin-top: 40px;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-icon {
+                left: 30px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 80px);
+                margin-left: 80px !important;
+                margin-right: 0 !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">💕 Our Love</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="navbar-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="our-story.html" class="active">Our Story</a></li>
+            <li><a href="my-feelings.html">My Feelings</a></li>
+            <li><a href="our-future.html">Our Future</a></li>
+            <li><a href="love-letter.html">Love Letter</a></li>
+            <li><a href="special.html">Special</a></li>
+            <li><a href="game.html">Games</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="story-container">
+            <div class="story-header fade-in-down">
+                <h1 class="section-title">Our Story 📖</h1>
+                <p class="section-subtitle">The beautiful beginning of us</p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline">
+                <!-- First Meet -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">✨</div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">10th Dec, 2025</div>
+                        <h3 class="timeline-title">The First Time We Met</h3>
+                        <div class="timeline-description editable" contenteditable="true">
+                            The first time we met, damn. It's been so long now, like the days have been going so fast,
+                            it feels like yesterday i met you, had that handshake and suddenly it's been 2 months.
+                            Honestly, didn't knew our bond would grow so much to this level that we would be in a
+                            relationship, this early!
+                            My heartbeats were damn fast, the whole time, when i was waiting to meet you.
+                            I have no idea why that was, but i could feel that you were already someone who had a
+                            purpose in my life and my heartbeats were on a marathon, running crazy fast,
+                            cherry on top you coming so late which makes it even more harder for me, my patience was
+                            running out.
+                            Like i was just walking around so much, might be due to nervousness but jst that my heart
+                            was pounding toooo fast.
+                            Honestly, the day went so goood! Enjoyed every single moment with you! Got less time to
+                            spend but even the time we spent were so goood! loved it!!
+                        </div>
+                        <div class="timeline-image">📸</div>
+                    </div>
+                </div>
+
+                <!-- First Date -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">💕</div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">10th Dec, 2025</div>
+                        <h3 class="timeline-title">Our First Date</h3>
+                        <div class="timeline-description editable" contenteditable="true">
+                            I keep thinking about our first date and it makes me smile.
+                            I don’t want anything.. just lots of quality time with you. Holding your hand, walking
+                            together, feeling comfortable and happy in each other’s presence.
+                            Sitting somewhere quiet, talking about everything, laughing and having fun
+                            I’d love for us to watch a movie together, share little moments, and visit a gurudwara or
+                            mandir..
+                            More than anything, I just want to be with you, creating memories, enjoying every second,
+                            and feeling close in the simplest, most beautiful way.
+                        </div>
+                        <div class="timeline-image">🌹</div>
+                    </div>
+                </div>
+
+                <!-- Falling in Love -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">💖</div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">10th Dec, 2025</div>
+                        <h3 class="timeline-title">Falling in Love</h3>
+                        <div class="timeline-description editable" contenteditable="true">
+                            With each passing day, my feelings for you grew stronger.
+                            The little things you did, the way you cared, your kindness and warmth.
+                            Everything about you made me fall deeper in love. I found myself thinking about you
+                            constantly, wanting to share every moment with you.
+                            You became my favorite person, my best friend, my everything.
+                        </div>
+                        <div class="timeline-image">💝</div>
+                    </div>
+                </div>
+
+                <!-- Special Moment -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">🌟</div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">10th Dec, 2025</div>
+                        <h3 class="timeline-title">A Special Moment</h3>
+                        <div class="timeline-description editable" contenteditable="true">
+                            A moment ill never forget, hahaha. Handing you the bouquet and you looking towards ariel and
+                            saying it's cute.
+                            And the way you kept your eyes off me the whole time hahaha, it was so cutee ma'am.
+                        </div>
+                        <div class="timeline-image">✨</div>
+                    </div>
+                </div>
+
+                <!-- Present Day -->
+                <div class="timeline-item">
+                    <div class="timeline-icon">❤️</div>
+                    <div class="timeline-content">
+                        <div class="timeline-date">Today</div>
+                        <h3 class="timeline-title">Our Love Today</h3>
+                        <div class="timeline-description editable" contenteditable="true">
+                            Our love today feels so real, simple and so comforting.
+                            We talk to each other for hours, without realizing how long we've been talking for without
+                            getting bored of it, sitting in silence which never feels awkward, Sleeping on calls, and
+                            what not.
+                            It’s in the care we show without even realizing it, in the little worries, in the small
+                            jealousies (though you never were jealous of anyone, but okay)
+                            and the messages saying "Khaana khaya?" or "Stay safe" , "dhyan se jana" showing how much we
+                            care about each other and will do forever.
+                        </div>
+                        <div class="timeline-image">💑</div>
+                    </div>
+                </div>
+            </div>
+
+            <p class="edit-hint">💡 Click on any text to edit and personalize your story!</p>
+
+            <!-- Navigation Buttons -->
+            <div style="display: flex; justify-content: space-between; margin-top: 60px; flex-wrap: wrap; gap: 15px;">
+                <a href="index.html" class="btn btn-outline">← Back to Home</a>
+                <a href="my-feelings.html" class="btn">Next: My Feelings →</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 8000);
+            }, 300);
+        }
+
+        createFloatingHearts();
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Save edits to localStorage
+        document.querySelectorAll('.editable').forEach(element => {
+            const key = 'story_' + element.closest('.timeline-item').querySelector('.timeline-title').textContent;
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                element.textContent = saved;
+            }
+
+            element.addEventListener('blur', function () {
+                localStorage.setItem(key, this.textContent);
+            });
+        });
+
+        // Save dates
+        document.querySelectorAll('.timeline-date').forEach(element => {
+            const key = 'date_' + element.nextElementSibling.textContent;
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                element.textContent = saved;
+            }
+
+            element.setAttribute('contenteditable', 'true');
+            element.classList.add('editable');
+            element.addEventListener('blur', function () {
+                localStorage.setItem(key, this.textContent);
+            });
+        });
+    </script>
+</body>
+
+</html>

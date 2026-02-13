@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="All the reasons why I love you">
+    <title>My Feelings ❤️</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            padding-top: 80px;
+        }
+
+        .feelings-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .feelings-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Animated Heart */
+        .heart-animation {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .beating-heart {
+            font-size: 8rem;
+            animation: heartbeat 1.5s ease infinite;
+            display: inline-block;
+            filter: drop-shadow(0 10px 20px rgba(255, 23, 68, 0.4));
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            10%,
+            30% {
+                transform: scale(0.9);
+            }
+
+            20%,
+            40%,
+            60%,
+            80% {
+                transform: scale(1.1);
+            }
+
+            50%,
+            70% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Love Quote */
+        .love-quote {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .love-quote p {
+            font-family: 'Parisienne', cursive;
+            font-size: 2rem;
+            color: var(--primary-pink);
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* Reasons Grid */
+        .reasons-section {
+            margin: 60px 0;
+        }
+
+        .reasons-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--white);
+            margin-bottom: 40px;
+            font-weight: 700;
+        }
+
+        .reasons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .reason-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease;
+        }
+
+        .reason-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .reason-number {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-pink), var(--soft-pink));
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 40px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .reason-text {
+            color: #333;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .reason-text.editable {
+            min-height: 60px;
+            padding: 10px;
+            border: 2px dashed transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: text;
+        }
+
+        .reason-text.editable:hover {
+            border-color: var(--light-pink);
+            background: rgba(255, 128, 171, 0.05);
+        }
+
+        .reason-text.editable:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            background: rgba(255, 128, 171, 0.1);
+        }
+
+        /* Add Reason Button */
+        .add-reason-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            background: rgba(255, 255, 255, 0.3);
+            border: 3px dashed var(--white);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 3rem;
+            color: var(--white);
+        }
+
+        .add-reason-btn:hover {
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(1.05);
+        }
+
+        /* Mood Section */
+        .mood-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 60px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .mood-title {
+            text-align: center;
+            color: var(--primary-pink);
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .mood-options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .mood-btn {
+            font-size: 3rem;
+            padding: 20px;
+            background: white;
+            border: 3px solid var(--light-pink);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mood-btn:hover {
+            transform: scale(1.2);
+            border-color: var(--primary-pink);
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .mood-btn.selected {
+            background: var(--primary-pink);
+            border-color: var(--deep-red);
+            transform: scale(1.3);
+        }
+
+        .mood-message {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1.3rem;
+            color: var(--deep-red);
+            font-weight: 600;
+            min-height: 40px;
+        }
+
+        .edit-hint {
+            text-align: center;
+            color: var(--white);
+            font-size: 0.9rem;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .beating-heart {
+                font-size: 5rem;
+            }
+
+            .love-quote p {
+                font-size: 1.5rem;
+            }
+
+            .reasons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">💕 Our Love</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="navbar-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="my-feelings.html" class="active">My Feelings</a></li>
+            <li><a href="our-future.html">Our Future</a></li>
+            <li><a href="love-letter.html">Love Letter</a></li>
+            <li><a href="special.html">Special</a></li>
+            <li><a href="game.html">Games</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="feelings-container">
+            <div class="feelings-header fade-in-down">
+                <h1 class="section-title">My Feelings 💖</h1>
+                <p class="section-subtitle">Everything you mean to me</p>
+            </div>
+
+            <!-- Animated Heart -->
+            <div class="heart-animation fade-in">
+                <div class="beating-heart">❤️</div>
+            </div>
+
+            <!-- Love Quote -->
+            <div class="love-quote fade-in-up">
+                <p>"You are my today and all of my tomorrows"</p>
+            </div>
+
+            <!-- Mood Selector -->
+            <div class="mood-section fade-in-up">
+                <h2 class="mood-title">How I Feel Right Now</h2>
+                <div class="mood-options">
+                    <button class="mood-btn" data-mood="In Love">😍</button>
+                    <button class="mood-btn" data-mood="Happy">😊</button>
+                    <button class="mood-btn" data-mood="Grateful">🥰</button>
+                    <button class="mood-btn" data-mood="Excited">🤩</button>
+                    <button class="mood-btn" data-mood="Blessed">😇</button>
+                    <button class="mood-btn" data-mood="Missing You">🥺</button>
+                </div>
+                <div class="mood-message" id="moodMessage"></div>
+            </div>
+
+            <!-- Reasons I Love You -->
+            <div class="reasons-section">
+                <h2 class="reasons-title">Reasons I Love You</h2>
+                <div class="reasons-grid" id="reasonsGrid">
+                    <div class="reason-card">
+                        <div class="reason-number">1</div>
+                        <div class="reason-text editable" contenteditable="true">Your smile, which lights up my entire
+                            world and
+                            makes even the darkest day so brighter!</div>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">2</div>
+                        <div class="reason-text editable" contenteditable="true">The way you care for others shows your
+                            beautiful heart and kind soul.</div>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">3</div>
+                        <div class="reason-text editable" contenteditable="true">You make me laugh even when I don't
+                            feel like smiling.Just by looking at you ,i feel so happy!</div>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">4</div>
+                        <div class="reason-text editable" contenteditable="true">Your love towards me is so much, i just
+                            try to be a better person every passing day..
+                            just that you don't feel anything less, than what you deserve, ma'am. </div>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">5</div>
+                        <div class="reason-text editable" contenteditable="true">The way you understand me without words
+                            makes me feel truly seen and loved.</div>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">6</div>
+                        <div class="reason-text editable" contenteditable="true">You support my dreams and encourage me
+                            to get what i've dreamt of</div>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">7</div>
+                        <div class="reason-text editable" contenteditable="true">Every moment with you feels like home -
+                            comfortable, safe, and full of love.</div>
+                    </div>
+                    <div class="reason-card">
+                        <div class="reason-number">8</div>
+                        <div class="reason-text editable" contenteditable="true">You are my best friend, my partner, and
+                            my soulmate all in one.</div>
+                        <div class="reason-number">9</div>
+                        <div class="reason-text editable" contenteditable="true">Loveyouuuuuuuu soooomuchhhhhhhhhhh
+                            Nidhuuuuuuu!!!!!!!! 💗💗💗💗💗</div>
+                    </div>
+                    <div class="add-reason-btn" onclick="addReason()">
+                        +
+                    </div>
+                </div>
+                <p class="edit-hint">💡 Click on any reason to edit, or click + to add more!</p>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div style="display: flex; justify-content: space-between; margin-top: 60px; flex-wrap: wrap; gap: 15px;">
+                <a href="our-story.html" class="btn btn-outline">← Our Story</a>
+                <a href="our-future.html" class="btn">Next: Our Future →</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 8000);
+            }, 300);
+        }
+
+        createFloatingHearts();
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Mood Selector
+        const moodMessages = {
+            'In Love': '💕 Completely and utterly in love with you!',
+            'Happy': '😊 You make me so happy!',
+            'Grateful': '🙏 So grateful to have you in my life!',
+            'Excited': '🎉 Excited about our future together!',
+            'Blessed': '✨ Blessed to call you mine!',
+            'Missing You': '💭 Missing you so much right now!'
+        };
+
+        document.querySelectorAll('.mood-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                const mood = this.dataset.mood;
+                document.getElementById('moodMessage').textContent = moodMessages[mood];
+                localStorage.setItem('currentMood', mood);
+            });
+        });
+
+        // Load saved mood
+        const savedMood = localStorage.getItem('currentMood');
+        if (savedMood) {
+            const btn = document.querySelector(`[data-mood="${savedMood}"]`);
+            if (btn) {
+                btn.classList.add('selected');
+                document.getElementById('moodMessage').textContent = moodMessages[savedMood];
+            }
+        }
+
+        // Save reasons edits
+        let reasonCount = 8;
+        document.querySelectorAll('.reason-text.editable').forEach((element, index) => {
+            const key = 'reason_' + (index + 1);
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                element.textContent = saved;
+            }
+
+            element.addEventListener('blur', function () {
+                localStorage.setItem(key, this.textContent);
+            });
+        });
+
+        // Add new reason
+        function addReason() {
+            reasonCount++;
+            const grid = document.getElementById('reasonsGrid');
+            const addBtn = grid.querySelector('.add-reason-btn');
+
+            const newCard = document.createElement('div');
+            newCard.className = 'reason-card';
+            newCard.innerHTML = `
+                <div class="reason-number">${reasonCount}</div>
+                <div class="reason-text editable" contenteditable="true">Click to add your reason...</div>
+            `;
+
+            grid.insertBefore(newCard, addBtn);
+
+            const editableText = newCard.querySelector('.reason-text');
+            editableText.focus();
+
+            editableText.addEventListener('blur', function () {
+                localStorage.setItem('reason_' + reasonCount, this.textContent);
+            });
+
+            localStorage.setItem('reasonCount', reasonCount);
+        }
+
+        // Load saved reason count
+        const savedCount = localStorage.getItem('reasonCount');
+        if (savedCount && parseInt(savedCount) > 8) {
+            const count = parseInt(savedCount);
+            for (let i = 9; i <= count; i++) {
+                const saved = localStorage.getItem('reason_' + i);
+                if (saved) {
+                    reasonCount = i;
+                    const grid = document.getElementById('reasonsGrid');
+                    const addBtn = grid.querySelector('.add-reason-btn');
+
+                    const newCard = document.createElement('div');
+                    newCard.className = 'reason-card';
+                    newCard.innerHTML = `
+                        <div class="reason-number">${i}</div>
+                        <div class="reason-text editable" contenteditable="true">${saved}</div>
+                    `;
+
+                    grid.insertBefore(newCard, addBtn);
+
+                    newCard.querySelector('.reason-text').addEventListener('blur', function () {
+                        localStorage.setItem('reason_' + i, this.textContent);
+                    });
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

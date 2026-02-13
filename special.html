@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A special message for you">
+    <title>For You ❤️</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600;700;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            padding-top: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .special-container {
+            max-width: 1000px;
+            width: 100%;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        /* Photo Frame */
+        .photo-frame {
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 60px;
+            background: white;
+            padding: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            animation: fadeInScale 1s ease;
+        }
+
+        .photo-container {
+            width: 100%;
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #fce4ec, #f8bbd0);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-placeholder {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Love Message */
+        .love-message {
+            font-family: 'Poppins', sans-serif;
+            font-size: clamp(3rem, 10vw, 8rem);
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff1744, #ff80ab, #ff4081, #f50057);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 3s ease infinite, pulse 2s ease-in-out infinite;
+            text-shadow: 0 10px 30px rgba(255, 23, 68, 0.3);
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin: 40px 0;
+        }
+
+        /* Animations */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        @keyframes gradientShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        /* Hearts decoration */
+        .hearts-decoration {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 3rem;
+            margin: 30px 0;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        /* Navigation */
+        .nav-buttons {
+            margin-top: 60px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .photo-frame {
+                max-width: 350px;
+            }
+
+            .love-message {
+                font-size: clamp(2rem, 8vw, 4rem);
+            }
+
+            .hearts-decoration {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">💕 Our Love</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="navbar-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="my-feelings.html">My Feelings</a></li>
+            <li><a href="our-future.html">Our Future</a></li>
+            <li><a href="love-letter.html">Love Letter</a></li>
+            <li><a href="special.html" class="active">Special</a></li>
+            <li><a href="game.html">Games</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="special-container">
+        <!-- Photo Frame -->
+        <div class="photo-frame">
+            <div class="photo-container">
+                <!-- 
+                    TO ADD YOUR PHOTO:
+                    1. Create a folder called "photos" in the same directory as this HTML file
+                    2. Add your photo and name it "nidhi.jpg" (or change the filename below)
+                    3. The photo will automatically display!
+                -->
+                <img src="photos/nidhi.jpg" alt="Nidhi"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="photo-placeholder" style="display: none;">
+                    <div style="text-align: center;">
+                        <div style="font-size: 5rem; margin-bottom: 20px;">💝</div>
+                        <p style="font-size: 1.2rem; color: var(--primary-pink); font-weight: 600;">Add your photo:</p>
+                        <p style="font-size: 0.9rem; color: #999; margin-top: 10px;">
+                            Create a "photos" folder<br>
+                            Add your photo as "nidhi.jpg"
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hearts Decoration -->
+        <div class="hearts-decoration">
+            <span>💕</span>
+            <span>❤️</span>
+            <span>💖</span>
+        </div>
+
+        <!-- Love Message -->
+        <h1 class="love-message">I LOVE YOU, NIDHU</h1>
+
+        <!-- Hearts Decoration -->
+        <div class="hearts-decoration">
+            <span>💝</span>
+            <span>💗</span>
+            <span>💘</span>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <div class="nav-buttons">
+            <a href="index.html" class="btn btn-outline">← Back to Home</a>
+            <a href="game.html" class="btn">Next: Games →</a>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 8000);
+            }, 300);
+        }
+
+        createFloatingHearts();
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+    </script>
+</body>
+
+</html>

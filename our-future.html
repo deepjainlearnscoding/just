@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Our dreams and future together">
+    <title>Our Future ❤️</title>
+    <link rel="stylesheet" href="shared-styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Poppins:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            padding-top: 80px;
+        }
+
+        .future-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .future-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        /* Bucket List */
+        .bucket-list-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .bucket-list-title {
+            color: var(--primary-pink);
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .bucket-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            margin: 15px 0;
+            background: white;
+            border-radius: 12px;
+            border-left: 5px solid var(--soft-pink);
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .bucket-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 20px var(--shadow);
+        }
+
+        .bucket-item.completed {
+            background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+            border-left-color: #4caf50;
+        }
+
+        .bucket-checkbox {
+            width: 30px;
+            height: 30px;
+            min-width: 30px;
+            border: 3px solid var(--soft-pink);
+            border-radius: 50%;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .bucket-item.completed .bucket-checkbox {
+            background: #4caf50;
+            border-color: #4caf50;
+        }
+
+        .bucket-text {
+            flex: 1;
+            font-size: 1.1rem;
+            color: #333;
+        }
+
+        .bucket-item.completed .bucket-text {
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        .add-bucket-item {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .add-bucket-input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid var(--light-pink);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .add-bucket-input:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+        }
+
+        /* Dreams Grid */
+        .dreams-section {
+            margin: 60px 0;
+        }
+
+        .dreams-title {
+            text-align: center;
+            color: var(--white);
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+        }
+
+        .dreams-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .dream-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 35px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .dream-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 15px 40px var(--shadow);
+        }
+
+        .dream-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .dream-title {
+            color: var(--primary-pink);
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .dream-description {
+            color: #555;
+            line-height: 1.8;
+            min-height: 80px;
+        }
+
+        .dream-description.editable {
+            padding: 10px;
+            border: 2px dashed transparent;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+            cursor: text;
+        }
+
+        .dream-description.editable:hover {
+            border-color: var(--light-pink);
+            background: rgba(255, 128, 171, 0.05);
+        }
+
+        .dream-description.editable:focus {
+            outline: none;
+            border-color: var(--primary-pink);
+            background: rgba(255, 128, 171, 0.1);
+        }
+
+        /* Timeline Goals */
+        .timeline-goals {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            margin: 60px 0;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-goals-title {
+            color: var(--primary-pink);
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        .goal-timeline {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .goal-item {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(135deg, #fff5f7, #ffffff);
+            border-radius: 15px;
+            border: 2px solid var(--light-pink);
+            transition: all 0.3s ease;
+        }
+
+        .goal-item:hover {
+            border-color: var(--primary-pink);
+            transform: scale(1.05);
+        }
+
+        .goal-year {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-pink);
+            margin-bottom: 15px;
+        }
+
+        .goal-text {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .edit-hint {
+            text-align: center;
+            color: var(--white);
+            font-size: 0.9rem;
+            margin-top: 30px;
+            font-style: italic;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dreams-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .goal-timeline {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Floating Hearts Background -->
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">💕 Our Love</a>
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <ul class="navbar-menu" id="navMenu">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="our-story.html">Our Story</a></li>
+            <li><a href="my-feelings.html">My Feelings</a></li>
+            <li><a href="our-future.html" class="active">Our Future</a></li>
+            <li><a href="love-letter.html">Love Letter</a></li>
+            <li><a href="special.html">Special</a></li>
+            <li><a href="game.html">Games</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="future-container">
+            <div class="future-header fade-in-down">
+                <h1 class="section-title">Our Future 🌟</h1>
+                <p class="section-subtitle">Dreams we'll make come true together</p>
+            </div>
+
+            <!-- Our Dreams -->
+            <div class="dreams-section">
+                <h2 class="dreams-title">Our Dreams</h2>
+                <div class="dreams-grid">
+                    <div class="dream-card fade-in-up">
+                        <span class="dream-icon">🏡</span>
+                        <h3 class="dream-title">Our Home</h3>
+                        <div class="dream-description editable" contenteditable="true">
+                            Building a cozy home filled with love, laughter, and countless beautiful memories together.
+                        </div>
+                    </div>
+
+                    <div class="dream-card fade-in-up">
+                        <span class="dream-icon">✈️</span>
+                        <h3 class="dream-title">Travel Together</h3>
+                        <div class="dream-description editable" contenteditable="true">
+                            Exploring the world hand in hand, discovering new places and creating adventures we'll never
+                            forget.
+                        </div>
+                    </div>
+
+                    <div class="dream-card fade-in-up">
+                        <span class="dream-icon">👨‍👩‍👧‍👦</span>
+                        <h3 class="dream-title">Family</h3>
+                        <div class="dream-description editable" contenteditable="true">
+                            Growing our family and raising our children with love, kindness, and all the values we
+                            cherish.
+                        </div>
+                    </div>
+
+                    <div class="dream-card fade-in-up">
+                        <span class="dream-icon">💼</span>
+                        <h3 class="dream-title">Career Goals</h3>
+                        <div class="dream-description editable" contenteditable="true">
+                            Supporting each other's dreams and ambitions, celebrating successes together along the way.
+                        </div>
+                    </div>
+
+                    <div class="dream-card fade-in-up">
+                        <span class="dream-icon">🎉</span>
+                        <h3 class="dream-title">Adventures</h3>
+                        <div class="dream-description editable" contenteditable="true">
+                            Trying new things, taking risks together, and making every day an exciting adventure.
+                        </div>
+                    </div>
+
+                    <div class="dream-card fade-in-up">
+                        <span class="dream-icon">💕</span>
+                        <h3 class="dream-title">Growing Old Together</h3>
+                        <div class="dream-description editable" contenteditable="true">
+                            Walking through life side by side, growing stronger together with each passing year.
+                        </div>
+                    </div>
+                </div>
+                <p class="edit-hint">💡 Click on any dream to personalize it!</p>
+            </div>
+
+            <!-- Bucket List -->
+            <div class="bucket-list-section fade-in-up">
+                <h2 class="bucket-list-title">Our Bucket List 📝</h2>
+                <div id="bucketList">
+                    <div class="bucket-item" onclick="toggleBucket(this)">
+                        <div class="bucket-checkbox"></div>
+                        <div class="bucket-text">Watch the sunrise together from a mountaintop</div>
+                    </div>
+                    <div class="bucket-item" onclick="toggleBucket(this)">
+                        <div class="bucket-checkbox"></div>
+                        <div class="bucket-text">Take a romantic trip to japan</div>
+                    </div>
+                    <div class="bucket-item" onclick="toggleBucket(this)">
+                        <div class="bucket-checkbox"></div>
+                        <div class="bucket-text">Learn to dance together</div>
+                    </div>
+                    <div class="bucket-item" onclick="toggleBucket(this)">
+                        <div class="bucket-checkbox"></div>
+                        <div class="bucket-text">Build our dream home</div>
+                    </div>
+                    <div class="bucket-item" onclick="toggleBucket(this)">
+                        <div class="bucket-checkbox"></div>
+                        <div class="bucket-text">Celebrate our 50th anniversary!!</div>
+                    </div>
+                    <div class="bucket-item" onclick="toggleBucket(this)">
+                        <div class="bucket-checkbox"></div>
+                        <div class="bucket-text">Go on a road trip across the country</div>
+                        <div class="bucket-item" onclick="toggleBucket(this)">
+                            <div class="bucket-checkbox"></div>
+                            <div class="bucket-text">Love eachother the way we do, now. Forever 💗</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="add-bucket-item">
+                    <input type="text" class="add-bucket-input" id="newBucketItem"
+                        placeholder="Add a new dream to our bucket list...">
+                    <button class="btn" onclick="addBucketItem()" style="white-space: nowrap;">Add +</button>
+                </div>
+            </div>
+
+            <!-- Timeline Goals -->
+            <div class="timeline-goals fade-in-up">
+                <h2 class="timeline-goals-title">Our Timeline 📅</h2>
+                <div class="goal-timeline">
+                    <div class="goal-item">
+                        <div class="goal-year">2026</div>
+                        <div class="goal-text">Strengthen our bond and create more beautiful memories</div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-year">2027</div>
+                        <div class="goal-text">Keep the bond alive and let's try to meet by then! Like actualllyyyyyy
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-year">2028</div>
+                        <div class="goal-text">To loveeeeee each other and care for each other the same way we do rn!
+                        </div>
+                    </div>
+                    <div class="goal-item">
+                        <div class="goal-year">Forever</div>
+                        <div class="goal-text">Love each other more with every passing day ❤️</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div style="display: flex; justify-content: space-between; margin-top: 60px; flex-wrap: wrap; gap: 15px;">
+                <a href="my-feelings.html" class="btn btn-outline">← My Feelings</a>
+                <a href="love-letter.html" class="btn">Next: Love Letter →</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Floating Hearts Background
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            const hearts = ['❤️', '💕', '💖', '💗', '💝', '💘'];
+
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.className = 'heart-particle';
+                heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.animationDuration = (Math.random() * 3 + 5) + 's';
+                heart.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                container.appendChild(heart);
+
+                setTimeout(() => heart.remove(), 8000);
+            }, 300);
+        }
+
+        createFloatingHearts();
+
+        // Mobile Menu Toggle
+        function toggleMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Save dream edits
+        document.querySelectorAll('.dream-description.editable').forEach((element, index) => {
+            const key = 'dream_' + index;
+            const saved = localStorage.getItem(key);
+            if (saved) {
+                element.textContent = saved;
+            }
+
+            element.addEventListener('blur', function () {
+                localStorage.setItem(key, this.textContent);
+            });
+        });
+
+        // Bucket List Toggle
+        function toggleBucket(item) {
+            item.classList.toggle('completed');
+            const checkbox = item.querySelector('.bucket-checkbox');
+            checkbox.textContent = item.classList.contains('completed') ? '✓' : '';
+            saveBucketList();
+        }
+
+        // Add Bucket Item
+        function addBucketItem() {
+            const input = document.getElementById('newBucketItem');
+            const text = input.value.trim();
+
+            if (text) {
+                const bucketList = document.getElementById('bucketList');
+                const newItem = document.createElement('div');
+                newItem.className = 'bucket-item';
+                newItem.onclick = function () { toggleBucket(this); };
+                newItem.innerHTML = `
+                    <div class="bucket-checkbox"></div>
+                    <div class="bucket-text">${text}</div>
+                `;
+                bucketList.appendChild(newItem);
+                input.value = '';
+                saveBucketList();
+            }
+        }
+
+        // Save Bucket List
+        function saveBucketList() {
+            const items = [];
+            document.querySelectorAll('.bucket-item').forEach(item => {
+                items.push({
+                    text: item.querySelector('.bucket-text').textContent,
+                    completed: item.classList.contains('completed')
+                });
+            });
+            localStorage.setItem('bucketList', JSON.stringify(items));
+        }
+
+        // Load Bucket List
+        function loadBucketList() {
+            const saved = localStorage.getItem('bucketList');
+            if (saved) {
+                const items = JSON.parse(saved);
+                const bucketList = document.getElementById('bucketList');
+                bucketList.innerHTML = '';
+
+                items.forEach(item => {
+                    const newItem = document.createElement('div');
+                    newItem.className = 'bucket-item' + (item.completed ? ' completed' : '');
+                    newItem.onclick = function () { toggleBucket(this); };
+                    newItem.innerHTML = `
+                        <div class="bucket-checkbox">${item.completed ? '✓' : ''}</div>
+                        <div class="bucket-text">${item.text}</div>
+                    `;
+                    bucketList.appendChild(newItem);
+                });
+            }
+        }
+
+        loadBucketList();
+
+        // Enter key to add bucket item
+        document.getElementById('newBucketItem').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                addBucketItem();
+            }
+        });
+    </script>
+</body>
+
+</html>
